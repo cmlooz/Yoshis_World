@@ -198,9 +198,9 @@ class World:
                         if selected_text == "principiante":
                             self.difficulty = 2
                         elif selected_text == "intermedio":
-                            self.difficulty = 6
+                            self.difficulty = 4
                         elif selected_text == "avanzado":
-                            self.difficulty = 10
+                            self.difficulty = 6
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.is_game_started:
                     col = x // SQUARE_SIZE
                     row = y // SQUARE_SIZE
