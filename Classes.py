@@ -39,10 +39,8 @@ class MiniMax:
 
     def minimax(self, green_yoshi_position, red_yoshi_position, depth, is_maximizing, alpha, beta, player, ROWS, COLS, green_painted, red_painted):
         moves = self.get_valid_moves(green_yoshi_position[0], green_yoshi_position[1], ROWS, COLS, green_painted, red_painted)
-
         if depth == 0 or not moves:
-            return Heuristic().heuristic(green_yoshi_position, red_yoshi_position, ROWS, COLS,green_painted,red_painted,player)
-
+            return Heuristic().heuristic(green_yoshi_position, red_yoshi_position, ROWS, COLS,green_painted,red_painted)
         if is_maximizing:
             max_eval = float(-math.inf)
             for move in moves:
@@ -58,7 +56,7 @@ class MiniMax:
             min_eval = float(math.inf)
             for move in moves:
                 red_painted.add(move)
-                eval = self.minimax((move[0],move[1]), red_yoshi_position, depth - 1, True, alpha, beta, player, ROWS, COLS, green_painted, red_painted)
+                eval = self.minimax(green_yoshi_position,(move[0],move[1]), depth - 1, True, alpha, beta, player, ROWS, COLS, green_painted, red_painted)
                 red_painted.remove(move)
                 min_eval = float(min(min_eval, eval))
                 beta = float(min(beta, eval))
@@ -67,9 +65,10 @@ class MiniMax:
             return float(min_eval)
 
 class Heuristic:
-    def heuristic(self,green_position,red_position, ROWS, COLS,green_painted,red_painted,current_turn):
+    def heuristic(self,green_position,red_position, ROWS, COLS,green_painted,red_painted):
         green_possible_moves = MiniMax().get_valid_moves(green_position[0], green_position[1], ROWS, COLS, set(green_painted),
                                                      set(red_painted))
         red_possible_moves = MiniMax().get_valid_moves(red_position[0], red_position[1], ROWS, COLS, set(green_painted),
                                                      set(red_painted))
         return float((len(green_possible_moves)-len(red_possible_moves))+(len(green_painted)-len(red_painted)))
+
